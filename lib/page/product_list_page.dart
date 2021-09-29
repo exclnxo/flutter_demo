@@ -24,7 +24,7 @@ class _ProductListPageState extends State<ProductListPage> {
       ),
       body: Container(
         color: Color(0xFFF7F7F7),
-        child: Consumer<ProductListProvider> (
+        child: Consumer<ProductListProvider>(
           builder: (_, provider, __) {
             //加載動畫
             if (provider.isLoading) {
@@ -56,18 +56,19 @@ class _ProductListPageState extends State<ProductListPage> {
                   ProductInfoModel model = provider.list[index];
                   // print(model.toJson());
 
-                  return InkWell(child:
-                  buildProductItem(model),
-                  onTap: () {
-                   //加入購物車
-                  Provider.of<CartProvider>(context, listen: false).addToCart(model);
-                  Fluttertoast.showToast(msg: '成功加入購物車',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    fontSize: 16.0
-                  );
-                  });
-            });
+                  return InkWell(
+                      child: buildProductItem(model),
+                      onTap: () {
+                        //加入購物車
+                        Provider.of<CartProvider>(context, listen: false)
+                            .addToCart(model);
+                        Fluttertoast.showToast(
+                            msg: '成功加入購物車',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            fontSize: 16.0);
+                      });
+                });
           },
         ),
       ),
@@ -76,56 +77,52 @@ class _ProductListPageState extends State<ProductListPage> {
 
   Row buildProductItem(ProductInfoModel model) {
     return Row(
-                  children: [
-                    Image.asset("assets${model.cover}",
-                    width: 95, height: 120,),
-                    Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  model.title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
-                              Text("價格${model.price}",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Color(0xFFe93b3d)),
-                              ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
-                              Row(
-                                children: [
-                                  Text("${model.comment}條評價",
-                                    style: TextStyle(
-                                        fontSize: 13.0,
-                                        color: Color(0xFF999999)),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Text("好評率${model.rate}",
-                                    style: TextStyle(
-                                        fontSize: 13.0,
-                                        color: Color(0xFF999999)),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                            ],
-                          ),
-                        ))
-                  ],
-                );
+      children: [
+        Image.asset(
+          "assets${model.cover}",
+          width: 95,
+          height: 120,
+        ),
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(model.title, maxLines: 2, overflow: TextOverflow.ellipsis),
+              SizedBox(
+                height: 5.0,
+              ),
+              Text(
+                "價格${model.price}",
+                style: TextStyle(fontSize: 16.0, color: Color(0xFFe93b3d)),
+              ),
+              SizedBox(
+                height: 5.0,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "${model.comment}條評價",
+                    style: TextStyle(fontSize: 13.0, color: Color(0xFF999999)),
+                  ),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text(
+                    "好評率${model.rate}",
+                    style: TextStyle(fontSize: 13.0, color: Color(0xFF999999)),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+            ],
+          ),
+        ))
+      ],
+    );
   }
 }
