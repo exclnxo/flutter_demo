@@ -103,7 +103,7 @@ class _CategoryPageState extends State<CategoryPage> {
           child: Container(
             width: 60.0,
             color: Colors.white,
-            child: Column(
+            child: Wrap(
               children: [
                 Image.asset(
                   "assets${contentList[i].desc[j].img}",

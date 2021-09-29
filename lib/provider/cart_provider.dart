@@ -10,11 +10,24 @@ class CartProvider with ChangeNotifier {
   Future<void> addToCart(ProductInfoModel data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //先取緩存的數據
-    List<String>? list = [];
-    list = prefs.getStringList("cartInfo");
+    List<String> list = [];
+    print("緩存${prefs.getStringList("cartInfo")}");
+    if (prefs.getStringList("cartInfo") != null) {
+      list = prefs.getStringList("cartInfo")!;
+    }
 
     //取出緩存
-    if (list != null) {
+    if (list.isEmpty == true) {
+      print("無商品");
+      //傳過來的數據傳到數列中
+      list.add(json.encode(data.toJson()));
+      //存入緩存
+      prefs.setStringList("cartInfo", list);
+      //更新本地數據
+      models.add(data);
+      //通知聽眾
+      notifyListeners();
+    } else {
       List<String> tmpList = [];
       //判斷緩存中有無商品
       bool isUpdated = false;
@@ -40,31 +53,22 @@ class CartProvider with ChangeNotifier {
       prefs.setStringList("cartInfo", list);
       //通知聽眾
       notifyListeners();
-    } else {
-      print("無商品");
-      //傳過來的數據傳到數列中
-      list!.add(json.encode(data.toJson()));
-      //存入緩存
-      prefs.setStringList("cartInfo", list);
-      //更新本地數據
-      models.add(data);
-      //通知聽眾
-      notifyListeners();
     }
   }
 
   void getCarList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? list = [];
+    List<String> list = [];
     //取出緩存
-    list = prefs.getStringList("cartInfo");
-    if (list != null) {
-      for (var i = 0; i < list.length; i ++) {
-        ProductInfoModel tmpData = ProductInfoModel.fromJson(json.decode(list[i]));
-        models.add(tmpData);
-      }
-      notifyListeners();
+    if (prefs.getStringList("cartInfo") != null) {
+      list = prefs.getStringList("cartInfo")!;
     }
+
+    for (var i = 0; i < list.length; i ++) {
+      ProductInfoModel tmpData = ProductInfoModel.fromJson(json.decode(list[i]));
+      models.add(tmpData);
+    }
+    notifyListeners();
   }
 
   //刪除商品
