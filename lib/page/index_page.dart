@@ -23,9 +23,13 @@ class _IndexPageState extends State<IndexPage> {
             type: BottomNavigationBarType.fixed,
             currentIndex: mProvider.bottomNaviIndex,
             items: <BottomNavigationBarItem>[
+              // BottomNavigationBarItem(
+              //   title: Text("首頁"),
+              //   icon: Icon(Icons.home),
+              // ),
               BottomNavigationBarItem(
-                title: Text("首頁"),
-                icon: Icon(Icons.home),
+                title: Text("分類"),
+                icon: Icon(Icons.category),
               ),
               BottomNavigationBarItem(
                 title: Text("購物車"),
@@ -44,6 +48,7 @@ class _IndexPageState extends State<IndexPage> {
           index: mProvider.bottomNaviIndex,
           //多層佈局元件 只顯示一個Widget
           children: <Widget>[
+            // HomePage(),
             CategoryPage(),
             CartPage(),
           ],
